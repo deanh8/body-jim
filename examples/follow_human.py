@@ -31,25 +31,27 @@ def xywh2xyxy(x):
 
 
 def non_max_suppression(boxes, scores, threshold):
-    assert boxes.shape[0] == scores.shape[0], "Shape mismatch between boxes and scores"
-    [v for (i, v) in enumerate(scores_indexes)]
-    ys1 = boxes[:, 0]
-    xs1 = boxes[:, 1]
-    ys2 = boxes[:, 2]
-    xs2 = boxes[:, 3]
-    areas = (ys2 - ys1) * (xs2 - xs1)
-    scores_indexes = scores.argsort().tolist()
-    boxes_keep_index = []
-    while len(scores_indexes):
-        index = scores_indexes.pop()
-        boxes_keep_index.append(index)
-        if not len(scores_indexes):
-            break
-        ious = compute_iou(boxes[index], boxes[scores_indexes], areas[index], areas[scores_indexes])
-        filtered_indexes = set((ious > threshold).nonzero()[0])
-        scores_indexes = [v for (i, v) in enumerate(scores_indexes) if i not in filtered_indexes]
-    return np.array(boxes_keep_index)
-
+  # adapted from https://gist.github.com/CMCDragonkai/1be3402e261d3c239a307a3346360506
+  assert boxes.shape[0] == scores.shape[0]
+  ys1 = boxes[:, 0]
+  xs1 = boxes[:, 1]
+  ys2 = boxes[:, 2]
+  xs2 = boxes[:, 3]
+  areas = (ys2 - ys1) * (xs2 - xs1)
+  scores_indexes = scores.argsort().tolist()
+  boxes_keep_index = []
+  while len(scores_indexes):
+    index = scores_indexes.pop()
+    boxes_keep_index.append(index)
+    if not len(scores_indexes):
+      break
+    ious = compute_iou(boxes[index], boxes[scores_indexes], areas[index], areas[scores_indexes])
+    filtered_indexes = set((ious > threshold).nonzero()[0])
+    scores_indexes = [
+      v for (i, v) in enumerate(scores_indexes)
+      if i not in filtered_indexes
+    ]
+  return np.array(boxes_keep_index)
 
 
 def compute_iou(box, boxes, box_area, boxes_area):
@@ -116,8 +118,8 @@ class YoloRunner:
     ]
 
 
-def run_follow_human(192.168.0.207):
-  env = BodyEnv(192.168.0.207, ["driver"], [], render_mode="human")
+def run_follow_human(body_ip):
+  env = BodyEnv(body_ip, ["driver"], [], render_mode="human")
   obs, _ = env.reset()
 
   yolo = YoloRunner()
@@ -174,7 +176,7 @@ def run_follow_human(192.168.0.207):
 
 if __name__=="__main__":
   parser = argparse.ArgumentParser("Human follower")
-  parser.add_argument("192.168.0.207", help="IP address of the body")
+  parser.add_argument("body_ip", help="IP address of the body")
   args = parser.parse_args()
 
-  run_follow_human(args.192.168.0.207)
+  run_follow_human(args.body_ip)
