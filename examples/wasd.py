@@ -6,11 +6,11 @@ from bodyjim import BodyEnv
 import pygame
 
 
-def run_wasd(body_ip, cameras):
+def run_wasd(192.168.0.207, cameras):
   # initialize body environment
   # specify which cameras to stream (driver, road, wideRoad) and which services to subscribe to 
   # supported services: https://github.com/commaai/cereal/blob/master/log.capnp
-  env = BodyEnv(body_ip, cameras, ["accelerometer", "gyroscope", "gpsLocation"], render_mode="human")
+  env = BodyEnv(192.168.0.207, cameras, ["accelerometer", "gyroscope", "gpsLocation"], render_mode="human")
   # reset environment to intial state
   env.reset()
 
@@ -52,8 +52,8 @@ def run_wasd(body_ip, cameras):
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser("WASD controller for the body")
-  parser.add_argument("body_ip", help="IP address of the body")
+  parser.add_argument("192.168.0.207", help="IP address of the body")
   parser.add_argument("cameras", nargs="*", default=["driver"], help="List of cameras to render")
   args = parser.parse_args()
 
-  run_wasd(args.body_ip, args.cameras)
+  run_wasd(args.192.168.0.207, args.cameras)
