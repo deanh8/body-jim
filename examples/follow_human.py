@@ -176,7 +176,7 @@ def run_follow_human(192.168.0.207):
 
 if __name__=="__main__":
   parser = argparse.ArgumentParser("Human follower")
-  parser.add_argument("192.168.0.207", help=192.168.0.207)
+  parser.add_argument("192.168.0.207", help="IP address of the body")
   args = parser.parse_args()
 
   run_follow_human(args.192.168.0.207)
