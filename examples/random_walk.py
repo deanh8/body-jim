@@ -6,8 +6,8 @@ from bodyjim import BodyEnv
 import pygame
 
 
-def run_random_walk(192.168.0.207:8022, cameras):
-  env = BodyEnv(192.168.0.207:8022, cameras, [], render_mode="human")
+def run_random_walk(192.168.0.207, cameras):
+  env = BodyEnv(192.168.0.207, cameras, [], render_mode="human")
   env.reset()
 
   while True:
@@ -25,8 +25,8 @@ def run_random_walk(192.168.0.207:8022, cameras):
 
 if __name__=="__main__":
   parser = argparse.ArgumentParser("Random walk")
-  parser.add_argument("192.168.0.207:8022", help="IP address of the body")
+  parser.add_argument("192.168.0.207", help="IP address of the body")
   parser.add_argument("cameras", nargs="*", default=["driver"], help="List of cameras to render")
   args = parser.parse_args()
 
-  run_random_walk(args.192.168.0.207:8022, args.cameras)
+  run_random_walk(args.192.168.0.207, args.cameras)
