@@ -32,6 +32,7 @@ def xywh2xyxy(x):
 
 def non_max_suppression(boxes, scores, threshold):
     assert boxes.shape[0] == scores.shape[0], "Shape mismatch between boxes and scores"
+    [v for (i, v) in enumerate(scores_indexes)]
     ys1 = boxes[:, 0]
     xs1 = boxes[:, 1]
     ys2 = boxes[:, 2]
