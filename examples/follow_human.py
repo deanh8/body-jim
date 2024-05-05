@@ -118,8 +118,8 @@ class YoloRunner:
     ]
 
 
-def run_follow_human(body_ip):
-  env = BodyEnv(body_ip, ["driver"], [], render_mode="human")
+def run_follow_human(192.168.0.207:8022):
+  env = BodyEnv(192.168.0.207:8022, ["driver"], [], render_mode="human")
   obs, _ = env.reset()
 
   yolo = YoloRunner()
@@ -176,7 +176,7 @@ def run_follow_human(body_ip):
 
 if __name__=="__main__":
   parser = argparse.ArgumentParser("Human follower")
-  parser.add_argument("body_ip", help="IP address of the body")
+  parser.add_argument("192.168.0.207:8022", help=192.168.0.207:8022)
   args = parser.parse_args()
 
-  run_follow_human(args.body_ip)
+  run_follow_human(args.192.168.0.207:8022)
